@@ -1,0 +1,19 @@
+{
+  "name": "mock-environment-variables-nodejs",
+  "version": "1.0.0",
+  "description": "Demonstrates how to effectively mock environment variables between test runs",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run mocha",
+    "mocha": "mocha --reporter spec './{,!(node_modules)/**/}test/*.spec.js'",
+    "feature-on": "TOGGLE_ENABLED=true node index",
+    "feature-off": "node index"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.1",
+    "mocha": "^8.3.0",
+    "mock-require": "^3.0.3"
+  }
+}
