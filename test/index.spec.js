@@ -1,35 +1,40 @@
 const { expect } = require('chai');
 const mock = require('mock-require');
 
-let getToggleStatus;
+function resetSystemUnderTestCache() {
+    delete require.cache[require.resolve('../getToggleStatus')];
+}
 
 describe('toggle on', () => {
     beforeEach(() => {
+        resetSystemUnderTestCache();
         mock('../env', {
             TOGGLE_ENABLED: 'true'
         });
-        getToggleStatus = mock.reRequire('../getToggleStatus');
     })
     afterEach(() => {
         mock.stopAll();
     });
     it('should return on', () => {
+        const getToggleStatus = require('../getToggleStatus');
         const status = getToggleStatus();
         expect(status).to.eq('on');
     });
-})
+});
 
 describe('toggle off (explicitly)', () => {
     beforeEach(() => {
+        resetSystemUnderTestCache();
         mock('../env', {
             TOGGLE_ENABLED: 'false'
         });
-        getToggleStatus = mock.reRequire('../getToggleStatus');
+
     });
     afterEach(() => {
         mock.stopAll();
     });
     it('should return off', () => {
+        const getToggleStatus = require('../getToggleStatus');
         const status = getToggleStatus();
         expect(status).to.eq('off');
     });
@@ -37,9 +42,10 @@ describe('toggle off (explicitly)', () => {
 
 describe('toggle off (implicitly)', () => {
     beforeEach(() => {
-        getToggleStatus = mock.reRequire('../getToggleStatus');
+        resetSystemUnderTestCache();
     });
     it('should return off', () => {
+        const getToggleStatus = require('../getToggleStatus');
         const status = getToggleStatus();
         expect(status).to.eq('off');
     });
